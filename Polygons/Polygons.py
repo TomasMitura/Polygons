@@ -1,4 +1,3 @@
-from polygenerator import random_polygon
 import matplotlib.pyplot as plt
 
 def draw_point(pt):
@@ -22,7 +21,7 @@ def generate_intersection(line_a, line_b):
         return (round(x1 + t*(x2 - x1), 6), round(y1 + t*(y2 - y1), 6))
     return None
 
-def draw_contours(edges, output_file):
+def draw_contours(edges, fab_file):
     intersection_points = []  # To store intersection points
     
     for y_coord in range(0, 1000):
@@ -40,18 +39,13 @@ def draw_contours(edges, output_file):
     # Sort intersection points based on y-coordinates
     intersection_points.sort(key=lambda point: point[1])
     
-    # Write intersection points to the output file
-    with open(output_file, "w") as f:
-        i = 0
-        while i + 1 < len(intersection_points):
-            x1, y1 = intersection_points[i]
-            x2, y2 = intersection_points[i + 1]
-            f.write(f"{x1:.6f}, {y1:.6f}, {x2:.6f}, {y2:.6f}\n")
-            i += 2         
-    plt.gcf().canvas.draw()
+    for i in range(0, len(intersection_points), 2):
+        x1, y1 = intersection_points[i]
+        x2, y2 = intersection_points[i + 1]
+        fab_file.write(f"c\t0\t{x1:.6f}\t{y1:.6f}\t0.000000\t{speed_off:.6f}\t{speed_off:.6f}\t{speed_off:.6f}\t0.000000\t0\n")
+        fab_file.write(f"c\t1\t{x2:.6f}\t{y2:.6f}\t0.000000\t{speed_on:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{laser_output:.6f}\t0\n")
 
-# Random BS
-#polygon = [(0.1, 0.4), (0.3, 0.7), (0.8, 0.3), (0.9, 0.1), (0.1, 0.4), (0.6, 0.7), (0.4, 0.8)]
+# Star Polygon
 polygon = [
     (0.5, 1.0),
     (0.61, 0.69),
@@ -65,41 +59,12 @@ polygon = [
     (0.39, 0.69),
 ]
 edges = list(zip(polygon, polygon[1:] + polygon[:1]))
-plt.figure(figsize=(10, 10))
-plt.gca().set_aspect("equal")
-xs, ys = zip(*polygon)
-output_file = r"C:\Users\mitura\Documents\Python_scripts\Polygon\Perimeter.txt"
-draw_contours(edges, output_file)
-plt.plot(xs, ys, "b-", linewidth=0.8)
-plt.show()
 
-def read_pairs_from_file(file_path):
-    pairs = []
-
-    with open(file_path, "r") as f:
-        lines = f.readlines()
-        for i in range(0, len(lines), 1):
-            coordinates = lines[i].strip().split(',')
-            x1, y1, x2, y2 = map(float, coordinates)
-            pairs.append(((x1, y1), (x2, y2)))
-
-    return pairs
-
+# Laser settings
 speed_off = 200
 speed_on = 2
 laser_output = 2.65
 
-input_file = r"C:\Users\mitura\Documents\Python_scripts\Polygon\Perimeter.txt"
-pairs = read_pairs_from_file(input_file)
-
 output_file = r"C:\Users\mitura\Documents\Python_scripts\Polygon\Polygon_draw.fab"
 with open(output_file, "w") as fab_file:
-    for pair in pairs:
-        x1, y1 = pair[0]
-        x2, y2 = pair[1]
-        fab_file.write(f"c\t0\t{x1:.6f}\t{y1:.6f}\t0.000000\t{speed_off:.6f}\t{speed_off:.6f}\t{speed_off:.6f}\t0.000000\t0\n")
-        fab_file.write(f"c\t1\t{x2:.6f}\t{y2:.6f}\t0.000000\t{speed_on:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{laser_output:.6f}\t0\n")
-
-
-
-
+    draw_contours(edges, fab_file)
