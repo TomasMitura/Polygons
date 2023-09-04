@@ -27,20 +27,32 @@ def generate_intersection(line_a, line_b):
         return (round(x1 + t*(x2 - x1), 6), round(y1 + t*(y2 - y1), 6))
     return None
 
+def check_edge_intersections(edges):
+    for i in range(len(edges)):
+        for j in range(i + 1, len(edges)):
+            intersection = generate_intersection(edges[i], edges[j])
+            if intersection is not None:
+                return True
+    return False
+
 def draw_contours(edges, fab_file):
     intersection_points = []  # To store intersection points
     
     for y_coord in range(0, 100): #put back to 1000
         y_coord /= 100 #put back to 1000
         horizontal_line = ((0, y_coord), (1, y_coord))
-        for edge in edges:
-            intersection = generate_intersection(edge, horizontal_line)
-            if intersection is not None:
-                draw_point(intersection)
-                intersection_points.append(intersection)
-            if edge[0][1] == edge[1][1] == y_coord:
-                intersection_points.extend([(round(edge[0][0], 6), round(edge[0][1], 6)),
-                                            (round(edge[1][0], 6), round(edge[1][1], 6))])
+        if check_edge_intersections(edges):
+            print("Incorrect input: Edges of the polygon intersect.")
+            return
+        else:
+            for edge in edges:
+                intersection = generate_intersection(edge, horizontal_line)
+                if intersection is not None:
+                    draw_point(intersection)
+                    intersection_points.append(intersection)
+                if edge[0][1] == edge[1][1] == y_coord:
+                    intersection_points.extend([(round(edge[0][0], 6), round(edge[0][1], 6)),
+                                                (round(edge[1][0], 6), round(edge[1][1], 6))])
     
     # Sort intersection points based on y-coordinates
     intersection_points.sort(key=lambda point: point[1])

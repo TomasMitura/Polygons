@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>fa5524b4-0c1d-453a-bfac-df544ce3e3e0</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Polygons.py</StartupFile>
+    <StartupFile>Test.py</StartupFile>
     <SearchPath>C:\Users\mitura\source\repos\Polygons\Polygons\Test.py</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
