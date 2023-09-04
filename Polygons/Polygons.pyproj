@@ -5,12 +5,15 @@
     <ProjectGuid>fa5524b4-0c1d-453a-bfac-df544ce3e3e0</ProjectGuid>
     <ProjectHome>.</ProjectHome>
     <StartupFile>Polygons.py</StartupFile>
-    <SearchPath>
-    </SearchPath>
+    <SearchPath>C:\Users\mitura\source\repos\Polygons\Polygons\Test.py</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>Polygons</Name>
     <RootNamespace>Polygons</RootNamespace>
+    <SuppressConfigureTestFrameworkPrompt>true</SuppressConfigureTestFrameworkPrompt>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <CommandLineArguments>200 2 2.65</CommandLineArguments>
+    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>

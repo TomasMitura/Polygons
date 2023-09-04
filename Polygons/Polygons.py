@@ -1,8 +1,14 @@
 import matplotlib.pyplot as plt
+import sys
 
 def draw_point(pt):
     x, y = pt
     plt.plot(x, y, "go", markersize=5)
+
+def draw_polygon(edges):
+    for edge in edges:
+        x_coords, y_coords = zip(*edge)
+        plt.plot(x_coords, y_coords, "b-")
 
 def generate_intersection(line_a, line_b):
     pt1, pt2 = line_a
@@ -61,10 +67,21 @@ polygon = [
 edges = list(zip(polygon, polygon[1:] + polygon[:1]))
 
 # Laser settings
-speed_off = 200
-speed_on = 2
-laser_output = 2.65
+if __name__ == "__main__":
+    speed_off = float(sys.argv[1])
+    speed_on = float(sys.argv[2])
+    laser_output = float(sys.argv[3])
 
 output_file = r"C:\Users\mitura\Documents\Python_scripts\Polygon\Polygon_draw.fab"
 with open(output_file, "w") as fab_file:
     draw_contours(edges, fab_file)
+
+plt.figure()
+
+# Draw the polygon outline
+draw_polygon(edges)
+
+# Show the plot
+plt.axis('equal')  # Set aspect ratio to equal for a consistent scale
+plt.show()
+
