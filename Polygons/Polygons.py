@@ -29,7 +29,6 @@ def generate_intersection(line_a, line_b):
 
 def draw_contours(edges, fab_file):
     intersection_points = []  # To store intersection points
-    
     for y_coord in range(0, 1000):
         y_coord /= 1000
         horizontal_line = ((0, y_coord), (1, y_coord))
@@ -62,8 +61,10 @@ polygon = [
     (0.2, 0.2),
     (0.31, 0.49),
     (0.09, 0.7),
-    (0.39, 0.69),
+    (0.39, 0.69)
 ]
+
+
 edges = list(zip(polygon, polygon[1:] + polygon[:1]))
 
 # Laser settings
@@ -72,7 +73,7 @@ if __name__ == "__main__":
     speed_on = float(sys.argv[2])
     laser_output = float(sys.argv[3])
 
-output_file = r"C:\Users\mitura\Documents\Python_scripts\Polygon\Polygon_draw.fab"
+output_file = r"C:\Users\mitura\Documents\Python_scripts\Polygon\Polygon_draw_star.fab"
 with open(output_file, "w") as fab_file:
     draw_contours(edges, fab_file)
 
@@ -84,4 +85,5 @@ draw_polygon(edges)
 # Show the plot
 plt.axis('equal')  # Set aspect ratio to equal for a consistent scale
 plt.show()
+
 

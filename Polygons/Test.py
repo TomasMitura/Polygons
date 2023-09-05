@@ -38,8 +38,8 @@ def check_edge_intersections(edges):
 def draw_contours(edges, fab_file):
     intersection_points = []  # To store intersection points
     
-    for y_coord in range(0, 100): #put back to 1000
-        y_coord /= 100 #put back to 1000
+    for y_coord in range(0, 1000):
+        y_coord /= 1000
         horizontal_line = ((0, y_coord), (1, y_coord))
         if check_edge_intersections(edges):
             print("Incorrect input: Edges of the polygon intersect.")
