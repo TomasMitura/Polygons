@@ -73,7 +73,7 @@ def draw_contours(edges, depth_file, base_depth, end_depth, fab_file):
         if y1 > previous_y:
             if depth <= end_depth:
                 depth_increment = -depth_increment
-            depth += -depth_increment
+            depth += depth_increment
         laser_output = interp_func(depth)
         fab_file.write(f"c\t0\t{x1:.6f}\t{y1:.6f}\t0.000000\t{speed_off:.6f}\t{speed_off:.6f}\t{speed_off:.6f}\t0.000000\t0\n")
         fab_file.write(f"c\t1\t{x2:.6f}\t{y2:.6f}\t0.000000\t{speed_on:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{laser_output:.6f}\t0\n")
@@ -111,8 +111,8 @@ print(edges)
 
 # Laser settings
 if __name__ == "__main__":
-    speed_off = 200.0   
-    speed_on = 2.0
+    speed_off = float(sys.argv[1])
+    speed_on = float(sys.argv[2])
     base_depth = 100.0
     end_depth = 70.0
 

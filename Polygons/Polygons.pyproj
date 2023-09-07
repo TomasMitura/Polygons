@@ -11,6 +11,7 @@
     <OutputPath>.</OutputPath>
     <Name>Polygons</Name>
     <RootNamespace>Polygons</RootNamespace>
+    <SuppressConfigureTestFrameworkPrompt>true</SuppressConfigureTestFrameworkPrompt>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -23,7 +24,7 @@
   <ItemGroup>
     <Compile Include="dektak_drawer.py" />
     <Compile Include="Polygons.py" />
-    <Compile Include="ray_casting.py" />
+    <Compile Include="kopec.py" />
     <Compile Include="Test.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
