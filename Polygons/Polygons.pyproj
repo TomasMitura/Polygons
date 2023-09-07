@@ -4,14 +4,16 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>fa5524b4-0c1d-453a-bfac-df544ce3e3e0</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Polygons.py</StartupFile>
-    <SearchPath>
-    </SearchPath>
+    <StartupFile>kanaliky.py</StartupFile>
+    <SearchPath>kopec.py</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>Polygons</Name>
     <RootNamespace>Polygons</RootNamespace>
     <SuppressConfigureTestFrameworkPrompt>true</SuppressConfigureTestFrameworkPrompt>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <CommandLineArguments>200.0 2.0</CommandLineArguments>
+    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -24,8 +26,11 @@
   <ItemGroup>
     <Compile Include="dektak_drawer.py" />
     <Compile Include="Polygons.py" />
-    <Compile Include="kopec.py" />
-    <Compile Include="Test.py" />
+    <Compile Include="kanaliky.py" />
+    <Compile Include="input.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="input.yaml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

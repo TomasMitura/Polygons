@@ -3,6 +3,7 @@ import sys
 import numpy as np
 from scipy.interpolate import interp1d
 import pandas as pd
+import yaml
 
 def draw_point(pt):
     x, y = pt
@@ -30,7 +31,7 @@ def generate_intersection(line_a, line_b):
         return round(x1 + t*(x2 - x1), 6), round(y1 + t*(y2 - y1), 6)
     return None
 
-def draw_contours(edges, depth_file, base_depth, end_depth, fab_file):
+def draw_contours(edges, depth_file, y_coord, y_increment, y_max, base_depth, end_depth, speed_off, speed_on, fab_file):
     # Load data from Excel file
     df = pd.read_excel(depth_file)
 
@@ -42,13 +43,8 @@ def draw_contours(edges, depth_file, base_depth, end_depth, fab_file):
     interp_func = interp1d(depth_data, energy_data, kind='linear', fill_value=(energy_data[0], energy_data[-1]))    
 
     intersection_points = []  # To store intersection points
-    
-    y_coord = 0.0
-    y_increment = 0.001
-    y_max = 1.0
-    
+
     depth = base_depth
-    depth_increment = (base_depth - end_depth)/(0.5*(y_max/y_increment))
 
     while y_coord <= y_max:
         horizontal_line = ((0, y_coord), (1, y_coord))
@@ -65,22 +61,58 @@ def draw_contours(edges, depth_file, base_depth, end_depth, fab_file):
     intersection_points.sort(key=lambda point: point[0])
     intersection_points.sort(key=lambda point: point[1])
     
-    previous_y = intersection_points[1][1]
 
     for i in range(0, len(intersection_points)-1, 2):
         x1, y1 = intersection_points[i]
         x2, y2 = intersection_points[i + 1]
-        if y1 > previous_y:
-            if depth <= end_depth:
-                depth_increment = -depth_increment
-            depth += depth_increment
+        if y1 < 0.40384:
+            depth = 95
+        elif (y1 > 0.5) and (y1 < 0.6153) :
+            depth = 85
+        elif  (y1 > 0.7115) and (y1 < 0.8076):
+            depth = 75
+        elif y1 > 0.9038:  
+            depth = 65
+        else:
+            depth = 100    
         laser_output = interp_func(depth)
         fab_file.write(f"c\t0\t{x1:.6f}\t{y1:.6f}\t0.000000\t{speed_off:.6f}\t{speed_off:.6f}\t{speed_off:.6f}\t0.000000\t0\n")
         fab_file.write(f"c\t1\t{x2:.6f}\t{y2:.6f}\t0.000000\t{speed_on:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{laser_output:.6f}\t0\n")
-        previous_y = y1
 
 
-polygon =[(-40,0),(-21,11),(-1,0),(-4,14),(34,0),(40,12),(49,12),(49,23),(48,29),(28,7),(15,28),(12,12),(-13,27),(-21,18),(-30,26),(-38,26),(-28,14)]
+#polygon =[(-40,0),(-21,11),(-1,0),(-4,14),(34,0),(40,12),(49,12),(49,23),(48,29),(28,7),(15,28),(12,12),(-13,27),(-21,18),(-30,26),(-38,26),(-28,14)]
+
+polygon = [
+    (0.43, 0.5),
+    (0.684, 0.5),
+    (0.684, 0.404),
+    (0.43, 0.404),
+    (0.43, 0.308),
+    (1.0, 0.308),
+    (1.0, 0.404),
+    (0.747, 0.404),
+    (0.747, 0.5),
+    (1.0, 0.5),
+    (1.0, 0.615),
+    (0.747, 0.615),
+    (0.747, 0.712),
+    (1.0, 0.712),
+    (1.0, 0.808),
+    (0.747, 0.808),
+    (0.747, 0.904),
+    (1.0, 0.904),
+    (1.0, 1.0),
+    (0.43, 1.0),
+    (0.43, 0.904),
+    (0.684, 0.904),
+    (0.684, 0.808),
+    (0.43, 0.808),
+    (0.43, 0.712),
+    (0.684, 0.712),
+    (0.684, 0.615),
+    (0.43, 0.615)
+]
+
 
 
 edges = list(zip(polygon, polygon[1:] + polygon[:1]))
@@ -106,20 +138,32 @@ max_y = max(np.max(edge[:, 1]) for edge in edges)
 if max_x > 1 or max_y > 1:
     for edge in edges:
         edge /= np.array([max_x, max_y])
-    
-print(edges)
 
 # Laser settings
 if __name__ == "__main__":
-    speed_off = float(sys.argv[1])
-    speed_on = float(sys.argv[2])
-    base_depth = 100.0
-    end_depth = 70.0
+    with open(r'C:\Users\mitura\source\repos\Polygons\Polygons\input.yaml') as file:
+        input_dict = yaml.load(file, Loader=yaml.FullLoader)
+        speed_off = input_dict['speed_off']
+        speed_on = input_dict['speed_on']
+        base_depth = input_dict['base_depth']
+        end_depth = input_dict['end_depth']
+        y_coord = input_dict['y_coord']
+        y_increment = input_dict['y_increment']
+        y_max = input_dict['y_max']        
+
+        print(input_dict)
+        
+    #create a text version of the inputs
+    text_content = "\n".join([f"{key}: {value}" for key, value in input_dict.items()])
+    
+    #store the inputs in a text file for future reference
+    with open(r"C:\Users\mitura\Documents\Python_scripts\Polygon\Polygon_inputs.txt", 'w') as text_file:
+        text_file.write(text_content)
 
 depth_file = r"C:\Users\mitura\Documents\Python_scripts\Depth\Vd_Interpolated060923.xlsx"
-output_file = r"C:\Users\mitura\Documents\Python_scripts\Polygon\Polygon_draw_Test_kopec.fab"
+output_file = r"C:\Users\mitura\Documents\Python_scripts\Polygon\Polygon_draw_Test_kanaliky.fab"
 with open(output_file, "w") as fab_file:
-    draw_contours(edges, depth_file, base_depth, end_depth, fab_file) #add + edges_2 if you want second shape
+    draw_contours(edges, depth_file, y_coord, y_increment, y_max, base_depth, end_depth, speed_off, speed_on, fab_file) #add + edges_2 if you want second shape
 
 plt.figure()
 

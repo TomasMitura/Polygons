@@ -1,0 +1,7 @@
+speed_off : 200.0 #laser table speed when laser is turned off [mm/s]
+speed_on : 2.0 #laser table speed when laser is turned on [mm/s]
+base_depth : 100.0 #depth at which we want to start the object
+end_depth : 70.0 #depth at which we want to currently turn around in the middle and start going back deeper
+y_coord : 0.0 #starting y-coordinate
+y_increment : 0.001 #the step between each line in mm, standard is 0.001 for 1um
+y_max : 1.0 #the maximum y-coordinate size of the object
