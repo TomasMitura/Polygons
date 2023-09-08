@@ -1,3 +1,4 @@
+from tkinter import Y
 import matplotlib.pyplot as plt
 import sys
 import numpy as np
@@ -44,10 +45,6 @@ def draw_contours(edges, depth_file, y_coord, y_increment, y_max, base_depth, en
 
     intersection_points = []  # To store intersection points
     
-    y_coord = 0.0
-    y_increment = 0.001
-    y_max = 1.0
-    
     depth = base_depth
     depth_increment = (base_depth - end_depth)/(0.5*(y_max/y_increment))
 
@@ -68,6 +65,8 @@ def draw_contours(edges, depth_file, y_coord, y_increment, y_max, base_depth, en
     
     previous_y = intersection_points[1][1]
 
+    fab_file.write(f"p\t1\n")
+    
     for i in range(0, len(intersection_points)-1, 2):
         x1, y1 = intersection_points[i]
         x2, y2 = intersection_points[i + 1]
@@ -83,7 +82,7 @@ def draw_contours(edges, depth_file, y_coord, y_increment, y_max, base_depth, en
 
 #polygon =[(-40,0),(-21,11),(-1,0),(-4,14),(34,0),(40,12),(49,12),(49,23),(48,29),(28,7),(15,28),(12,12),(-13,27),(-21,18),(-30,26),(-38,26),(-28,14)]
 
-polygon = polygon = [
+"""polygon = polygon = [
     [-34, 26],
     [-54, 26],
     [-54, 21],
@@ -113,35 +112,11 @@ polygon = polygon = [
     [-54, 32],
     [-34, 32]
 ]
-
-
-edges = list(zip(polygon, polygon[1:] + polygon[:1]))
-#edges_2 = list(zip(polygon_2, polygon_2[1:] + polygon_2[:1]))
-
-edges = [np.array(edge, dtype=float) for edge in edges]
-
-# Shift all edge coordinates to positive values by adding the absolute minimum value
-min_x = min(np.min(edge[:, 0]) for edge in edges)
-min_y = min(np.min(edge[:, 1]) for edge in edges)
-
-if min_x < 0:
-    for edge in edges:
-        edge[:, 0] += abs(min_x)
-if min_y < 0:
-    for edge in edges:
-        edge[:, 1] += abs(min_y)
-
-# Normalize the coordinates of edges to the range [0, 1]
-max_x = max(np.max(edge[:, 0]) for edge in edges)
-max_y = max(np.max(edge[:, 1]) for edge in edges)
-
-if max_x > 1 or max_y > 1:
-    for edge in edges:
-        edge /= np.array([max_x, max_y])
+"""
 
 # Laser settings
 if __name__ == "__main__":
-    with open(r'C:\Users\mitura\source\repos\Polygons\Polygons\input.yaml') as file:
+    with open(r'C:\Users\mitura\source\repos\Polygons\Polygons\parameter_input.yaml') as file:
         input_dict = yaml.load(file, Loader=yaml.FullLoader)
         speed_off = input_dict['speed_off']
         speed_on = input_dict['speed_on']
@@ -150,18 +125,51 @@ if __name__ == "__main__":
         y_coord = input_dict['y_coord']
         y_increment = input_dict['y_increment']
         y_max = input_dict['y_max']        
-
+        depth_file = input_dict['calibration_file']
+        output_file = input_dict['output_file']
+        polygon = input_dict['polygon']
         print(input_dict)
+        
+    
+    polygon = [(point['x'], point['y']) for point in polygon]
+        
+    edges = list(zip(polygon, polygon[1:] + polygon[:1]))
+    #edges_2 = list(zip(polygon_2, polygon_2[1:] + polygon_2[:1]))
+
+    edges = [np.array(edge, dtype=float) for edge in edges]
+
+    # Shift all edge coordinates to positive values by adding the absolute minimum value
+    min_x = min(np.min(edge[:, 0]) for edge in edges)
+    min_y = min(np.min(edge[:, 1]) for edge in edges)
+
+    if min_x < 0:
+        for edge in edges:
+            edge[:, 0] += abs(min_x)
+    if min_y < 0:
+        for edge in edges:
+            edge[:, 1] += abs(min_y)
+
+    # Normalize the coordinates of edges to the range [0, 1]
+    max_x = max(np.max(edge[:, 0]) for edge in edges)
+    max_y = max(np.max(edge[:, 1]) for edge in edges)
+    if max_y > max_x:
+        max_coord = max_y
+    else:
+        max_coord = max_x
+    if max_coord > 1:
+        for edge in edges:
+            edge /= np.array([max_coord, max_coord])
+
         
     #create a text version of the inputs
     text_content = "\n".join([f"{key}: {value}" for key, value in input_dict.items()])
     
     #store the inputs in a text file for future reference
-    with open(r"C:\Users\mitura\Documents\Python_scripts\Polygon\Polygon_inputs.txt", 'w') as text_file:
+    with open(r"C:\Users\mitura\Documents\Python_scripts\Polygon\parameter_inputs.txt", 'w') as text_file:
         text_file.write(text_content)
 
-depth_file = r"C:\Users\mitura\Documents\Python_scripts\Depth\Vd_Interpolated060923.xlsx"
-output_file = r"C:\Users\mitura\Documents\Python_scripts\Polygon\Polygon_draw_Test_kopec.fab"
+#depth_file = r"C:\Users\mitura\Documents\Python_scripts\Depth\VD_Interpolated060923.xlsx"
+#output_file = r"C:\Users\mitura\Documents\Python_scripts\Polygon\Polygon_draw_Test_Star.fab"
 with open(output_file, "w") as fab_file:
     draw_contours(edges, depth_file, y_coord, y_increment, y_max, base_depth, end_depth, speed_off, speed_on, fab_file) #add + edges_2 if you want second shape
 

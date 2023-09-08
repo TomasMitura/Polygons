@@ -31,7 +31,7 @@ def generate_intersection(line_a, line_b):
         return round(x1 + t*(x2 - x1), 6), round(y1 + t*(y2 - y1), 6)
     return None
 
-def draw_contours(edges, depth_file, y_coord, y_increment, y_max, base_depth, end_depth, speed_off, speed_on, fab_file):
+def draw_contours(edges, depth_file, y_coord, y_increment, y_max, base_depth, speed_off, speed_on, fab_file):
     # Load data from Excel file
     df = pd.read_excel(depth_file)
 
@@ -61,6 +61,7 @@ def draw_contours(edges, depth_file, y_coord, y_increment, y_max, base_depth, en
     intersection_points.sort(key=lambda point: point[0])
     intersection_points.sort(key=lambda point: point[1])
     
+    fab_file.write(f"p\t1\n")
 
     for i in range(0, len(intersection_points)-1, 2):
         x1, y1 = intersection_points[i]
@@ -163,7 +164,7 @@ if __name__ == "__main__":
 depth_file = r"C:\Users\mitura\Documents\Python_scripts\Depth\Vd_Interpolated060923.xlsx"
 output_file = r"C:\Users\mitura\Documents\Python_scripts\Polygon\Polygon_draw_Test_kanaliky.fab"
 with open(output_file, "w") as fab_file:
-    draw_contours(edges, depth_file, y_coord, y_increment, y_max, base_depth, end_depth, speed_off, speed_on, fab_file) #add + edges_2 if you want second shape
+    draw_contours(edges, depth_file, y_coord, y_increment, y_max, base_depth, speed_off, speed_on, fab_file) #add + edges_2 if you want second shape
 
 plt.figure()
 
