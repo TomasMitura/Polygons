@@ -1,36 +1,30 @@
 speed_off : 200.0 #laser table speed when laser is turned off [mm/s]
 speed_on : 2.0 #laser table speed when laser is turned on [mm/s]
 base_depth : 100.0 #depth at which we want to start the object
-end_depth : 75.0 #depth at which we want to currently turn around in the middle and start going back deeper
+end_depth : 100.0 #depth at which we want to currently turn around in the middle and start going back deeper
 y_coord : 0.0 #starting y-coordinate
 y_increment : 0.001 #the step between each line in mm, standard is 0.001 for 1um
 y_max : 1.0 #the maximum y-coordinate size of the object
-calibration_file : C:\Users\mitura\Documents\Python_scripts\Depth\VD_Interpolated060923.xlsx #latest calibration from run_calibration.py
-output_file : C:\Users\mitura\Documents\Python_scripts\Polygon\Polygon_draw_Test_Star.fab #output file for uFab to read
+calibration_file : C:\Users\mitura\Documents\Python_scripts\Depth\VD_Interpolated080923a.xlsx #latest calibration from run_calibration.py
+output_file : C:\Users\mitura\Documents\Python_scripts\Polygon\Polygon_draw_star.fab #output file for uFab to read
 
 #Input the polygon points in correct order
-#""" polygon:
-#  - {x: 0, y: 0}
-  #- {x: 0, y: 1}
-  #- {x: 1, y: 1}
-  #- {x: 1, y: 0}
-
-#octagram
 polygon:
-  - {x: 542, y: 107}
-  - {x: 562, y: 102}
-  - {x: 582, y: 110}
-  - {x: 598, y: 142}
-  - {x: 600, y: 192}
-  - {x: 601, y: 225}
-  - {x: 592, y: 261}
-  - {x: 572, y: 263}
-  - {x: 551, y: 245}
-  - {x: 526, y: 220}
-  - {x: 520, y: 188}
-  - {x: 518, y: 152}
-  - {x: 525, y: 127}
-  - {x: 542, y: 107}
+  - {x: 0.5, y: 1.0}
+  - {x: 0.6, y: 0.7}
+  - {x: 0.9, y: 0.7}
+  - {x: 0.7, y: 0.5}
+  - {x: 0.8, y: 0.2}
+  - {x: 0.5, y: 0.4}
+  - {x: 0.2, y: 0.2}
+  - {x: 0.3, y: 0.5}
+  - {x: 0.1, y: 0.7}
+  - {x: 0.4, y: 0.7}
+
+
+
+
+
 
 
 

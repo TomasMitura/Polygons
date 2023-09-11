@@ -31,9 +31,9 @@ def generate_intersection(line_a, line_b):
         return round(x1 + t*(x2 - x1), 6), round(y1 + t*(y2 - y1), 6)
     return None
 
-def draw_contours(edges, depth_file, y_coord, y_increment, y_max, base_depth, speed_off, speed_on, fab_file):
+def draw_contours(edges, calibration_file, y_coord, y_increment, y_max, base_depth, speed_off, speed_on, fab_file):
     # Load data from Excel file
-    df = pd.read_excel(depth_file)
+    df = pd.read_excel(calibration_file)
 
     # Extract energy and depth columns from the DataFrame
     energy_data = df["Voltage"].values
@@ -142,7 +142,7 @@ if max_x > 1 or max_y > 1:
 
 # Laser settings
 if __name__ == "__main__":
-    with open(r'C:\Users\mitura\source\repos\Polygons\Polygons\input.yaml') as file:
+    with open(r'C:\Users\mitura\source\repos\Polygons\Polygons\parameter_input.yaml') as file:
         input_dict = yaml.load(file, Loader=yaml.FullLoader)
         speed_off = input_dict['speed_off']
         speed_on = input_dict['speed_on']
@@ -150,7 +150,9 @@ if __name__ == "__main__":
         end_depth = input_dict['end_depth']
         y_coord = input_dict['y_coord']
         y_increment = input_dict['y_increment']
-        y_max = input_dict['y_max']        
+        y_max = input_dict['y_max']  
+        calibration_file = input_dict['calibration_file']
+        output_file = input_dict['output_file']
 
         print(input_dict)
         
@@ -161,10 +163,8 @@ if __name__ == "__main__":
     with open(r"C:\Users\mitura\Documents\Python_scripts\Polygon\Polygon_inputs.txt", 'w') as text_file:
         text_file.write(text_content)
 
-depth_file = r"C:\Users\mitura\Documents\Python_scripts\Depth\Vd_Interpolated060923.xlsx"
-output_file = r"C:\Users\mitura\Documents\Python_scripts\Polygon\Polygon_draw_Test_kanaliky.fab"
 with open(output_file, "w") as fab_file:
-    draw_contours(edges, depth_file, y_coord, y_increment, y_max, base_depth, speed_off, speed_on, fab_file) #add + edges_2 if you want second shape
+    draw_contours(edges, calibration_file, y_coord, y_increment, y_max, base_depth, speed_off, speed_on, fab_file) #add + edges_2 if you want second shape
 
 plt.figure()
 
