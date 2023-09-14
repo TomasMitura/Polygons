@@ -3,11 +3,11 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 # Directory path containing the CSV files
-directory_path = "C:/Users/mitura/Documents/Python_scripts/Dektak"
+directory_path = "C:/Users/mitura/Documents/Dektak"
 
 # List of CSV file names and corresponding legend labels
 csv_files = [
-    ("L1_xmodel_Yscan.csv", "z 0um, w 1um"),
+    ("L9_z500_w02_Y-scan.csv", "z 500um, w 02um"),
     #("L2_z100.csv", "z 100 um"),
     #("L2_z200.csv", "z 200 um"),
     #("L2_z300.csv", "z 300 um"),
@@ -15,7 +15,12 @@ csv_files = [
     #("L3_w01.csv", "w 01um"),
     #("L3_w02.csv", "w 02um"),
     #("L2_z500.csv", "z 500 um"),
-    ("L3_z500_w02.csv", "z 500um, w 1um")
+    #("L3_z500_w02.csv", "z 500um, w 1um"),
+    ("L10_4x_2mms_low_energy.csv", "4x low energy 2 mms"),
+    ("L10_4x_repeat_same_line.csv", "4x repeat same line"),
+    ("L10_4x_8mms.csv", "4x 8 mms"),
+    ("L10_8x_16mms.csv", "8x 16 mms")
+    
 ]
 
 plt.figure(figsize=(10, 6))

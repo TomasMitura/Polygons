@@ -1,0 +1,20 @@
+speed_off : 200.0 #laser table speed when laser is turned off [mm/s]
+speed_on : 2.0 #laser table speed when laser is turned on [mm/s]
+base_depth : 100.0 #depth at which we want to start the object
+end_depth : 100.0 #depth at which we want to currently turn around in the middle and start going back deeper
+y_start : 0.0 #starting y-coordinate
+y_increment : 0.001 #the step between each line in mm, standard is 0.001 for 1um
+y_max : 2.0 #the maximum y-coordinate size of the object
+base_z : 0.0 #starting z-cordinate 
+z_increment : 0.001 #increment of the step in z_direction
+z_max : 0.1 #height of the object in z-axis
+slow_speed : 0.7 #when encountering a small segment, slow down to this speed. Careful, slowing down too much might result in the laser not turning on, make sure to check the formula
+calibration_file : C:\Users\mitura\Documents\Python_scripts\Depth\VD_Interpolated080923a.xlsx #latest calibration from run_calibration.py
+output_file : C:\Users\mitura\Documents\Python_scripts\Polygon\3D_tests.fab #output file for uFab to read
+  
+3D_polygon:
+  - {x: 10.0, y: 10.0, z: 10.0}
+  - {x: 10.0, y: 0.0, z: 10.0}
+  - {x: 0.0, y: 0.0, z: 0.0}
+  - {x: 0.0, y: 10.0, z: 0.0}
+

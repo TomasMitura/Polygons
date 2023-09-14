@@ -66,16 +66,16 @@ def draw_contours(edges, calibration_file, y_coord, y_increment, y_max, base_dep
     for i in range(0, len(intersection_points)-1, 2):
         x1, y1 = intersection_points[i]
         x2, y2 = intersection_points[i + 1]
-        if y1 < 0.40384:
+        if y1 < 0.808:
             depth = 95
-        elif (y1 > 0.5) and (y1 < 0.6153) :
+        elif (y1 > 1.0) and (y1 < 1.23) :
             depth = 85
-        elif  (y1 > 0.7115) and (y1 < 0.8076):
+        elif  (y1 > 1.424) and (y1 < 1.616):
             depth = 75
-        elif y1 > 0.9038:  
+        elif y1 > 1.808:  
             depth = 65
         else:
-            depth = 100    
+            depth = 50    
         laser_output = interp_func(depth)
         fab_file.write(f"c\t0\t{x1:.6f}\t{y1:.6f}\t0.000000\t{speed_off:.6f}\t{speed_off:.6f}\t{speed_off:.6f}\t0.000000\t0\n")
         fab_file.write(f"c\t1\t{x2:.6f}\t{y2:.6f}\t0.000000\t{speed_on:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{laser_output:.6f}\t0\n")
@@ -84,35 +84,36 @@ def draw_contours(edges, calibration_file, y_coord, y_increment, y_max, base_dep
 #polygon =[(-40,0),(-21,11),(-1,0),(-4,14),(34,0),(40,12),(49,12),(49,23),(48,29),(28,7),(15,28),(12,12),(-13,27),(-21,18),(-30,26),(-38,26),(-28,14)]
 
 polygon = [
-    (0.43, 0.5),
-    (0.684, 0.5),
-    (0.684, 0.404),
-    (0.43, 0.404),
-    (0.43, 0.308),
-    (1.0, 0.308),
-    (1.0, 0.404),
-    (0.747, 0.404),
-    (0.747, 0.5),
-    (1.0, 0.5),
-    (1.0, 0.615),
-    (0.747, 0.615),
-    (0.747, 0.712),
-    (1.0, 0.712),
-    (1.0, 0.808),
-    (0.747, 0.808),
-    (0.747, 0.904),
-    (1.0, 0.904),
-    (1.0, 1.0),
-    (0.43, 1.0),
-    (0.43, 0.904),
-    (0.684, 0.904),
-    (0.684, 0.808),
-    (0.43, 0.808),
-    (0.43, 0.712),
-    (0.684, 0.712),
-    (0.684, 0.615),
-    (0.43, 0.615)
+    (0.86, 1.0),
+    (1.368, 1.0),
+    (1.368, 0.808),
+    (0.86, 0.808),
+    (0.86, 0.616),
+    (2.0, 0.616),
+    (2.0, 0.808),
+    (1.494, 0.808),
+    (1.494, 1.0),
+    (2.0, 1.0),
+    (2.0, 1.23),
+    (1.494, 1.23),
+    (1.494, 1.424),
+    (2.0, 1.424),
+    (2.0, 1.616),
+    (1.494, 1.616),
+    (1.494, 1.808),
+    (2.0, 1.808),
+    (2.0, 2.0),
+    (0.86, 2.0),
+    (0.86, 1.808),
+    (1.368, 1.808),
+    (1.368, 1.616),
+    (0.86, 1.616),
+    (0.86, 1.424),
+    (1.368, 1.424),
+    (1.368, 1.23),
+    (0.86, 1.23)
 ]
+
 
 
 
@@ -122,23 +123,23 @@ edges = list(zip(polygon, polygon[1:] + polygon[:1]))
 edges = [np.array(edge, dtype=float) for edge in edges]
 
 # Shift all edge coordinates to positive values by adding the absolute minimum value
-min_x = min(np.min(edge[:, 0]) for edge in edges)
-min_y = min(np.min(edge[:, 1]) for edge in edges)
+#min_x = min(np.min(edge[:, 0]) for edge in edges)
+#min_y = min(np.min(edge[:, 1]) for edge in edges)
 
-if min_x < 0:
-    for edge in edges:
-        edge[:, 0] += abs(min_x)
-if min_y < 0:
-    for edge in edges:
-        edge[:, 1] += abs(min_y)
+#if min_x < 0:
+    #for edge in edges:
+        #edge[:, 0] += abs(min_x)
+#if min_y < 0:
+    #for edge in edges:
+        #edge[:, 1] += abs(min_y)
 
 # Normalize the coordinates of edges to the range [0, 1]
-max_x = max(np.max(edge[:, 0]) for edge in edges)
-max_y = max(np.max(edge[:, 1]) for edge in edges)
+#max_x = max(np.max(edge[:, 0]) for edge in edges)
+# = max(np.max(edge[:, 1]) for edge in edges)
 
-if max_x > 1 or max_y > 1:
-    for edge in edges:
-        edge /= np.array([max_x, max_y])
+#if max_x > 1 or max_y > 1:
+    #for edge in edges:
+        #edge /= np.array([max_x, max_y])
 
 # Laser settings
 if __name__ == "__main__":

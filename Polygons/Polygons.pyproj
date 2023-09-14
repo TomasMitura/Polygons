@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>fa5524b4-0c1d-453a-bfac-df544ce3e3e0</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Polygons.py</StartupFile>
+    <StartupFile>2pp_polygon.py</StartupFile>
     <SearchPath>kopec.py</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
@@ -24,12 +24,17 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="2pp_polygon.py" />
+    <Compile Include="3D_polygon.py" />
     <Compile Include="dektak_drawer.py" />
     <Compile Include="Polygons.py" />
     <Compile Include="kanaliky.py" />
-    <Compile Include="input.py" />
+    <Compile Include="test.py" />
+    <Compile Include="vertice_extractor.py" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="2pp_parameter_input.yaml" />
+    <Content Include="3D_parameter_input.yaml" />
     <Content Include="parameter_input.yaml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />

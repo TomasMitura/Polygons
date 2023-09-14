@@ -32,7 +32,7 @@ def generate_intersection(line_a, line_b):
         return round(x1 + t*(x2 - x1), 6), round(y1 + t*(y2 - y1), 6)
     return None
 
-def draw_contours(edges, depth_file, y_coord, y_increment, y_max, base_depth, end_depth, slow_speed, speed_off, base_speed, fab_file):
+def draw_contours(edges, depth_file, y_start, y_increment, y_max, base_depth, end_depth, speed_off, speed_on, fab_file):
     # Load data from Excel file
     df = pd.read_excel(depth_file)
 
@@ -46,8 +46,8 @@ def draw_contours(edges, depth_file, y_coord, y_increment, y_max, base_depth, en
     intersection_points = []  # To store intersection points
     
     depth = base_depth
-    depth_increment = (base_depth - end_depth)/(0.5*(y_max/y_increment)) #vytvori ihlan
-    speed_on = base_speed
+    y_coord = y_start
+    z = 0
 
     while y_coord <= y_max:
         horizontal_line = ((0, y_coord), (1, y_coord))
@@ -64,57 +64,51 @@ def draw_contours(edges, depth_file, y_coord, y_increment, y_max, base_depth, en
     intersection_points.sort(key=lambda point: point[0])
     intersection_points.sort(key=lambda point: point[1])
     
-    previous_y = intersection_points[1][1]
 
     fab_file.write(f"p\t1\n")
     
     for i in range(0, len(intersection_points)-1, 2):
         x1, y1 = intersection_points[i]
         x2, y2 = intersection_points[i + 1]
-        #if y1 > previous_y:
-        #    if depth <= end_depth:
-        #        depth_increment = -depth_increment
-        #    depth += -depth_increment
         laser_output = interp_func(depth)
-        if (x2 - x1) < 0.09:
-            speed_on = slow_speed
-            laser_output = ((laser_output - 0.5)/(base_speed/slow_speed))+0.5
-        else:
-            speed_on = base_speed
-        fab_file.write(f"c\t0\t{x1:.6f}\t{y1:.6f}\t0.000000\t{speed_off:.6f}\t{speed_off:.6f}\t{speed_off:.6f}\t0.000000\t0\n")
-        fab_file.write(f"c\t1\t{x2:.6f}\t{y2:.6f}\t0.000000\t{speed_on:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{laser_output:.6f}\t0\n")
-        previous_y = y1
-
-
-#polygon =[(-40,0),(-21,11),(-1,0),(-4,14),(34,0),(40,12),(49,12),(49,23),(48,29),(28,7),(15,28),(12,12),(-13,27),(-21,18),(-30,26),(-38,26),(-28,14)]
-
-
+        z = 
+        fab_file.write(f"c\t0\t{x1:.6f}\t{y1:.6f}\t{z:.6f}\t{speed_off:.6f}\t{speed_off:.6f}\t{speed_off:.6f}\t0.000000\t0\n")
+        fab_file.write(f"c\t1\t{x2:.6f}\t{y2:.6f}\t{z:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{laser_output:.6f}\t0\n")
 
 # Laser settings
 if __name__ == "__main__":
-    with open(r'C:\Users\mitura\source\repos\Polygons\Polygons\parameter_input.yaml') as file:
+    with open(r'C:\Users\mitura\source\repos\Polygons\Polygons\3D_parameter_input.yaml') as file:
         input_dict = yaml.load(file, Loader=yaml.FullLoader)
         speed_off = input_dict['speed_off']
-        base_speed = input_dict['base_speed']
+        speed_on = input_dict['speed_on']
         base_depth = input_dict['base_depth']
         end_depth = input_dict['end_depth']
-        y_coord = input_dict['y_coord']
+        y_start = input_dict['y_start']
         y_increment = input_dict['y_increment']
         y_max = input_dict['y_max']        
-        slow_speed = input_dict['slow_speed']
         depth_file = input_dict['calibration_file']
         output_file = input_dict['output_file']
-        polygon = input_dict['polygon']
+        polygon_3D = input_dict['3D_polygon']
+        print(input_dict)
         
     
-    polygon = [(point['x'], point['y']) for point in polygon]
         
-    edges = list(zip(polygon, polygon[1:] + polygon[:1]))
-    #edges_2 = list(zip(polygon_2, polygon_2[1:] + polygon_2[:1]))
+    # Extract x, y, and z coordinates from the loaded 3D data
+    vertices_3d = [(point['x'], point['y'], point['z']) for point in polygon_3D]
 
+    # Convert the list of tuples to a NumPy array for further processing if needed
+    vertices_3d_array = np.array(vertices_3d, dtype=float)
+
+    # Project 3D coordinates to 2D (top-down view)
+    edges = [(x, y) for x, y, z in vertices_3d]
+
+    # Create edges by connecting the points
+    edges = list(zip(edges, edges[1:] + edges[:1]))
+
+    # Convert edges to NumPy arrays
     edges = [np.array(edge, dtype=float) for edge in edges]
 
-    # Shift all edge coordinates to positive values by adding the absolute minimum value
+    # Shift all edge coordinates to positive values by adding the absolute minimum value for each dimension
     min_x = min(np.min(edge[:, 0]) for edge in edges)
     min_y = min(np.min(edge[:, 1]) for edge in edges)
 
@@ -128,26 +122,15 @@ if __name__ == "__main__":
     # Normalize the coordinates of edges to the range [0, 1]
     max_x = max(np.max(edge[:, 0]) for edge in edges)
     max_y = max(np.max(edge[:, 1]) for edge in edges)
-    if max_y > max_x:
-        max_coord = max_y
-    else:
-        max_coord = max_x
+
+    max_coord = max(max_x - min_x, max_y - min_y)
+
     if max_coord > 1:
         for edge in edges:
-            edge /= np.array([max_coord, max_coord])
-            
-    print(edges)
-
-        
-    #create a text version of the inputs
-    text_content = "\n".join([f"{key}: {value}" for key, value in input_dict.items()])
-    
-    #store the inputs in a text file for future reference
-    with open(r"C:\Users\mitura\Documents\Python_scripts\Polygon\parameter_inputs.txt", 'w') as text_file:
-        text_file.write(text_content)
+            edge /= max_coord
 
 with open(output_file, "w") as fab_file:
-    draw_contours(edges, depth_file, y_coord, y_increment, y_max, base_depth, end_depth, slow_speed, speed_off, base_speed, fab_file) #add + edges_2 if you want second shape
+    draw_contours(edges, depth_file, y_start, y_increment, y_max, base_depth, end_depth, speed_off, speed_on, fab_file)
 
 plt.figure()
 
