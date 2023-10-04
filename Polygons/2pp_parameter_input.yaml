@@ -1,12 +1,16 @@
 speed_on : 2.0 #laser table speed when laser is turned on [mm/s]
-base_z : -0.065 #starting z-cordinate 
-z_increment : -0.005 #increment of the step in z_direction
-z_max : -0.130 #height of the object in z-axis
+base_z : 0.000 #starting z-cordinate 
+z_increment : 0.010 #increment of the step in z_direction
+z_max : 0.30 #height of the object in z-axis
 laser_output: 2 #Energy of the laser
-output_file : C:\Users\mitura\Documents\Python_scripts\Polygon\2pp_fixing.fab #output file for uFab to read
+output_file : C:\Users\mitura\Documents\Python_scripts\Polygon\2pp_squares_z10um_250923.fab #output file for uFab to read
 polygon:
-  - {x: 0.0, y: 0.0}
-  - {x: 1.0, y: 0.0}
+  - {x: 4.0, y: 0.0}
+  - {x: 4.0, y: 0.5}
+  - {x: 4.5, y: 0.5}
+  - {x: 4.5, y: 0.0}
+  - {x: 4.0, y: 0.0}
+  
 
 
 

@@ -1,42 +1,62 @@
+repeat : 8 #how many times I want the same thing repeated
 speed_off : 200.0 #laser table speed when laser is turned off [mm/s]
-base_speed : 2.0 #laser table speed when laser is turned on [mm/s]
+base_speed : 12.0 #laser table speed when laser is turned on [mm/s]
+laser_output: 1.408 #laser output in case I am not using standardized depth
 base_depth : 100.0 #depth at which we want to start the object
 end_depth : 100.0 #depth at which we want to currently turn around in the middle and start going back deeper
-y_coord : 0.0 #starting y-coordinate
-y_increment : 0.001 #the step between each line in mm, standard is 0.001 for 1um
-y_max : 2.0 #the maximum y-coordinate size of the object
+y_increment : 0.01 #the step between each line in mm, standard is 0.001 for 1um
 base_z : 0.0 #starting z-cordinate 
 z_increment : 0.001 #increment of the step in z_direction
 z_max : 0.1 #height of the object in z-axis
 slow_speed : 0.7 #when encountering a small segment, slow down to this speed. Careful, slowing down too much might result in the laser not turning on, make sure to check the formula
-calibration_file : C:\Users\mitura\Documents\Python_scripts\Depth\VD_Interpolated080923a.xlsx #latest calibration from run_calibration.py
-output_file : C:\Users\mitura\Documents\Python_scripts\Polygon\base_for_2pp.fab #output file for uFab to read
+calibration_file : C:\Users\mitura\Documents\Python_scripts\Depth\VD_Interpolated031023.xlsx #latest calibration from run_calibration.py
+output_file : C:\Users\mitura\Documents\Python_scripts\Polygon\Key_test.fab #output file for uFab to read
 
-polygon:
-  - {x: -8.0, y: 10.0}
-  - {x: -12.0, y: 7.0}
-  - {x: -11.0, y: 2.0}
-  - {x: -8.0, y: -2.0}
-  - {x: 0.0, y: -2.0}
-  - {x: 2.0, y: 0.0}
-  - {x: -2.0, y: 3.0}
-  - {x: 5.0, y: 5.0}
-  - {x: 0.0, y: 8.0}
-  - {x: -2.0, y: 6.0}
-  - {x: -2.0, y: 10.0}
-  - {x: -5.0, y: 8.0}
-  - {x: -6.0, y: 11.0}
-  - {x: -8.0, y: 10.0}
-
-
-
-
-
-
-
-
-
-
-
-
-  
+polygon_1:
+- {x: 0.000000, y: 0.200000}
+- {x: 1.000000, y: 0.200000}
+- {x: 1.000000, y: 0.300000}
+- {x: 0.000000, y: 0.300000}
+- {x: 0.000000, y: 0.200000}
+polygon_2:
+- {x: 0.000000, y: 0.400000}
+- {x: 0.900000, y: 0.400000}
+- {x: 0.900000, y: 0.500000}
+- {x: 0.000000, y: 0.500000}
+- {x: 0.000000, y: 0.400000}
+polygon_3:
+- {x: 0.000000, y: 0.600000}
+- {x: 0.800000, y: 0.600000}
+- {x: 0.800000, y: 0.700000}
+- {x: 0.000000, y: 0.700000}
+- {x: 0.000000, y: 0.600000}
+polygon_4:
+- {x: 0.000000, y: 0.800000}
+- {x: 0.700000, y: 0.800000}
+- {x: 0.700000, y: 0.900000}
+- {x: 0.000000, y: 0.900000}
+- {x: 0.000000, y: 0.800000}
+polygon_5:
+- {x: 0.000000, y: 1.000000}
+- {x: 0.600000, y: 1.000000}
+- {x: 0.600000, y: 1.100000}
+- {x: 0.000000, y: 1.100000}
+- {x: 0.000000, y: 1.000000}
+polygon_6:
+- {x: 0.000000, y: 1.200000}
+- {x: 0.500000, y: 1.200000}
+- {x: 0.500000, y: 1.300000}
+- {x: 0.000000, y: 1.300000}
+- {x: 0.000000, y: 1.200000}
+polygon_7:
+- {x: 0.000000, y: 1.500000}
+- {x: 0.000000, y: 1.400000}
+- {x: 0.400000, y: 1.400000}
+- {x: 0.400000, y: 1.500000}
+- {x: 0.000000, y: 1.500000}
+polygon_8:
+- {x: 0.000000, y: 0.100000}
+- {x: 0.000000, y: 0.000000}
+- {x: 1.200000, y: 0.000000}
+- {x: 1.200000, y: 0.100000}
+- {x: 0.000000, y: 0.100000}

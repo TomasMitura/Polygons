@@ -1,0 +1,31 @@
+speed_on : 2.0 #laser table speed when laser is turned on [mm/s]
+base_z : 0.0 #starting z-cordinate 
+z_increment : 0.005 #increment of the step in z_direction
+laser_output: 2 #Energy of the laser
+output_file : C:\Users\mitura\Documents\Python_scripts\Polygon\pyramid_test.fab #output file for uFab to read
+
+polygon:
+  - {x: -30.0, y: 10.0}
+  - {x: -30.0, y: -20.0}
+  - {x: 0.0, y: -20.0}
+  - {x: 0.0, y: 10.0}
+  - {x: -27.0, y: 10.0}
+  - {x: -27.0, y: -18.0}
+  - {x: -3.0, y: -18.0}
+  - {x: -3.0, y: 7.0}
+  - {x: -24.0, y: 7.0}
+  - {x: -24.0, y: -15.0}
+  - {x: -6.0, y: -15.0}
+  - {x: -6.0, y: 4.0}
+  - {x: -21.0, y: 4.0}
+  - {x: -21.0, y: -12.0}
+  - {x: -9.0, y: -12.0}
+  - {x: -9.0, y: 1.0}
+  - {x: -18.0, y: 1.0}
+  - {x: -18.0, y: -10.0}
+  - {x: -12.0, y: -10.0}
+  - {x: -12.0, y: -1.0}
+  - {x: -16.0, y: -1.0}
+  - {x: -16.0, y: -7.0}
+  - {x: -14.0, y: -7.0}
+  - {x: -14.0, y: -4.0}

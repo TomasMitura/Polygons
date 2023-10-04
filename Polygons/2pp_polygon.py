@@ -2,7 +2,6 @@ import matplotlib.pyplot as plt
 import yaml
 import math
 
-
 def draw_contours(fab_file, x_coords, y_coords, base_z, z_max, z_increment, speed_on, laser_output):
     fab_file.write("p\t2\n")
         
@@ -10,7 +9,7 @@ def draw_contours(fab_file, x_coords, y_coords, base_z, z_max, z_increment, spee
     x, y = x_coords[0], y_coords[0]
     fab_file.write(f"c\t0\t{x:.6f}\t{y:.6f}\t{z:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t0.000000\t0\n")
     
-    while abs(z) <= abs(z_max):
+    while z <= z_max:
         for i in range(len(x_coords)):
             x, y = x_coords[i], y_coords[i]
             fab_file.write(f"c\t0\t{x:.6f}\t{y:.6f}\t{z:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{laser_output:.6f}\t0\n")

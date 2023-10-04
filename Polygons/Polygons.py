@@ -85,11 +85,6 @@ def draw_contours(edges, depth_file, y_coord, y_increment, y_max, base_depth, en
         fab_file.write(f"c\t1\t{x2:.6f}\t{y2:.6f}\t0.000000\t{speed_on:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{laser_output:.6f}\t0\n")
         previous_y = y1
 
-
-#polygon =[(-40,0),(-21,11),(-1,0),(-4,14),(34,0),(40,12),(49,12),(49,23),(48,29),(28,7),(15,28),(12,12),(-13,27),(-21,18),(-30,26),(-38,26),(-28,14)]
-
-
-
 # Laser settings
 if __name__ == "__main__":
     with open(r'C:\Users\mitura\source\repos\Polygons\Polygons\parameter_input.yaml') as file:
