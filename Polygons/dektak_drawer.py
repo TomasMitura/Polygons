@@ -25,14 +25,17 @@ csv_files = [
     #("L12_4x_repeat_same_lines.csv", "4x repeat same lines"),
     #("L12_8x_repeat.csv", "8x 16 mm/s"),
     #("L9_kanaliky_right_bez_stredu.csv", "kanaliky - v lavo"),
-    ("L9_kanaliky_left_bez_stredu.csv", "kanaliky - hlbka 65, 75, 85, 95 um"),
+    #("L9_kanaliky_left_bez_stredu.csv", "kanaliky - hlbka 65, 75, 85, 95 um"),
     #("L13_8x_repeat_same_lines.csv", "8x 16 mm/s same lines - 25.09. depth - 100 um"),
     #("L13_w1um_2mms.csv", "1x 2 mm/s - 25.09. - depth 100 um"), 
     #("L15A_8x_repeat_1develop_AZ326.csv", "8x 16 mm/s, AZ326 - 28.09. - depth 70 um"),
     #("L15B_8x_repeat_mad532s.csv", "8x 16 mm/s, mad532-S - 28.09. - depth 70 um"),
     #("L16_vertical_scan.csv", "1 2 mm/s, mad532-S - 2.10. - depth 75 um")
-    
-    
+    ("P2_control_sample.csv", "Control sample - exposure 1, development 1"),
+    #("P2_4x_repeat_first_dev.csv", "4x repeat - exposure 1, development 1")
+    ("P2_4x_repeat_second_dev_vertical_middle.csv", "4x repeat, vertical stripe, 1 exposure 2 exposures, 2 developments"),
+    #("P2_4x_repeat_second_dev_vertical_left_vertical.csv", "4x repeat, horizontal stripe, 1 exposure, 2 developments")
+    #("P2_4x_repeat_second_dev_horizontal.csv", "4x repeat, 4x repeat, horizontal stripe, 1 exposure, 2 exposures, 2 developments. Horizontal scan")
 ]
 
 plt.figure(figsize=(10, 6))

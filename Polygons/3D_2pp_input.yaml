@@ -1,8 +1,8 @@
 speed_on : 2.0 #laser table speed when laser is turned on [mm/s]
 laser_output: 2 #Energy of the laser
-x_repetition: 5 #number of objects in the array in the x direction
-y_repetition: 5 #number of objects in the array in the y direction
+x_repetition: 1 #number of objects in the array in the x direction
+y_repetition: 1 #number of objects in the array in the y direction
 spacing: 0.3 #space between objects in the array [mm]
-output_file : C:\Users\mitura\Documents\Python_scripts\Polygon\Tower_tiny.fab #output file for uFab to read
+output_file : C:\Users\mitura\Documents\Python_scripts\Polygon\Tower_2_5um_z.fab #output file for uFab to read
 
   

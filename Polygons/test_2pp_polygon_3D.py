@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import yaml
 import math
 
-def draw_contours(fab_file, x_repetition, y_repetition, x_coords, y_coords, z_coords, speed_on, laser_output, max_x, max_y, min_z, spacing):
+def draw_contours(fab_file, x_repetition, y_repetition, x_coords, y_coords, z_coords, speed_on, laser_output, max_x, max_y, max_z, min_x, min_y, min_z, spacing):
     fab_file.write("p\t2\n")
     x_move = max_x + spacing
     y_move = max_y + spacing
@@ -29,7 +29,32 @@ def draw_contours(fab_file, x_repetition, y_repetition, x_coords, y_coords, z_co
                     laser_output = laser_output_save_point
                 fab_file.write(f"c\t0\t{x:.6f}\t{y:.6f}\t{z:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{laser_output:.6f}\t0\n")
             if y_repetition > 1 or x_repetition > 1:
-                fab_file.write(f"c\t0\t{modified_x_coords[-1]:.6f}\t{modified_y_coords[-1]:.6f}\t{min_z:.6f}\t{speed_return:.6f}\t{speed_return:.6f}\t{speed_return:.6f}\t{laser_output:.6f}\t0\n")
+                fab_file.write(f"c\t0\t{modified_x_coords[-1]:.6f}\t{modified_y_coords[-1]:.6f}\t{min_z:.6f}\t{speed_return:.6f}\t{speed_return:.6f}\t{speed_return:.6f}\t0.000000\t0\n")
+    #kriziky
+    z = 0
+    mid_x = (max_x + min_x)/2
+    mid_y = (max_y + min_y)/2
+    overhang_x = 0.05
+    overhang_y = 0.05
+    while z <= max_z:
+        fab_file.write(f"c\t0\t{mid_x:.6f}\t{mid_y:.6f}\t{z:.6f}\t{speed_return:.6f}\t{speed_return:.6f}\t{speed_return:.6f}\t0.000000\t0\n")
+        fab_file.write(f"c\t0\t{(max_x+overhang_x):.6f}\t{mid_y:.6f}\t{z:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{laser_output:.6f}\t0\n")
+        fab_file.write(f"c\t0\t{(min_x-overhang_x):.6f}\t{mid_y:.6f}\t{z:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{laser_output:.6f}\t0\n")
+        fab_file.write(f"c\t0\t{mid_x:.6f}\t{mid_y:.6f}\t{z:.6f}\t{speed_return:.6f}\t{speed_return:.6f}\t{speed_return:.6f}\t0.000000\t0\n")
+        fab_file.write(f"c\t0\t{(mid_x):.6f}\t{(max_y+overhang_y):.6f}\t{z:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{laser_output:.6f}\t0\n")
+        fab_file.write(f"c\t0\t{(mid_x):.6f}\t{(min_y-overhang_y):.6f}\t{z:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{laser_output:.6f}\t0\n")
+        z += 0.05
+    #Velky kriz v strede
+    z = max_z/2
+    overhang_x = 0.15
+    overhang_y = 0.15
+    fab_file.write(f"c\t0\t{mid_x:.6f}\t{mid_y:.6f}\t{z:.6f}\t{speed_return:.6f}\t{speed_return:.6f}\t{speed_return:.6f}\t0.000000\t0\n")
+    fab_file.write(f"c\t0\t{(max_x+overhang_x):.6f}\t{mid_y:.6f}\t{z:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{laser_output:.6f}\t0\n")
+    fab_file.write(f"c\t0\t{(min_x-overhang_x):.6f}\t{mid_y:.6f}\t{z:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{laser_output:.6f}\t0\n")
+    fab_file.write(f"c\t0\t{mid_x:.6f}\t{mid_y:.6f}\t{z:.6f}\t{speed_return:.6f}\t{speed_return:.6f}\t{speed_return:.6f}\t0.000000\t0\n")
+    fab_file.write(f"c\t0\t{(mid_x):.6f}\t{(max_y+overhang_y):.6f}\t{z:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{laser_output:.6f}\t0\n")
+    fab_file.write(f"c\t0\t{(mid_x):.6f}\t{(min_y-overhang_y):.6f}\t{z:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{laser_output:.6f}\t0\n")  
+        
 
 # Laser settings
 if __name__ == "__main__":
@@ -42,7 +67,7 @@ if __name__ == "__main__":
         y_repetition = input_dict['y_repetition']
         spacing = input_dict['spacing']
         
-    with open(r'C:\Users\mitura\Documents\Python_scripts\Objects\Tower_tiny.yaml') as file:
+    with open(r'C:\Users\mitura\Documents\Python_scripts\Objects\Tower_2_5um_z.yaml') as file:
         polygon_data = yaml.load(file, Loader=yaml.FullLoader)
         polygon = polygon_data.get('points', [])
          
@@ -50,12 +75,12 @@ if __name__ == "__main__":
     y_coords = [point['y'] for point in polygon]
     z_coords = [point['z'] for point in polygon]  
     max_x = max(x_coords)
+    min_x = min(x_coords)
     max_y = max(y_coords)
+    min_y = min(y_coords)
     min_z = min(z_coords)
-
-    
-    print("Polygon points:", polygon)
+    max_z = max(z_coords)
 
 
 with open(output_file, "w") as fab_file:
-    draw_contours(fab_file, x_repetition, y_repetition, x_coords, y_coords, z_coords, speed_on, laser_output, max_x, max_y, min_z, spacing)
+    draw_contours(fab_file, x_repetition, y_repetition, x_coords, y_coords, z_coords, speed_on, laser_output, max_x, max_y, max_z, min_x, min_y, min_z, spacing)

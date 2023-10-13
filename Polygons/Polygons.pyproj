@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>fa5524b4-0c1d-453a-bfac-df544ce3e3e0</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>test_2pp_polygon_3D.py</StartupFile>
+    <StartupFile>absolute_garbage.py</StartupFile>
     <SearchPath>kopec.py</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
@@ -26,6 +26,7 @@
   <ItemGroup>
     <Compile Include="2pp_polygon.py" />
     <Compile Include="3D_2pp_input.yaml" />
+    <Compile Include="absolute_garbage.py" />
     <Compile Include="NOTWORKING_3D_polygon.py" />
     <Compile Include="dektak_drawer.py" />
     <Compile Include="Polygons.py" />
