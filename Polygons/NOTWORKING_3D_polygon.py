@@ -162,3 +162,34 @@ draw_polygon(edges)
 plt.axis('equal')  # Set aspect ratio to equal for a consistent scale
 plt.show()
 
+    if abs(np.dot(ray_direction, triangle_normal)) < tolerance:
+        print('Parallel wall happened')
+        y_fill = min_y
+        while y_fill <= max_y:                 
+            ray = ((min_z, min_y), (max_z, max_y))
+            edges = []
+            vertices = [vertex0, vertex1, vertex2]
+            parallel_intersection_points = []
+            for i in range(len(vertices)):
+                # Extract y and z coordinates from each vertex
+                z0, y0 = vertices[i][1], vertices[i][2]
+                z1, y1 = vertices[(i + 1) % len(vertices)][1], vertices[(i + 1) % len(vertices)][2]
+    
+                # Create the edge using the y and z coordinates
+                edge = ((z0, y0), (z1, y1))
+                edges.append(edge)
+            for edge in edges:
+                parallel_intersection = generate_intersection(edge, ray)
+                if parallel_intersection is not None:
+                    parallel_intersection_points.append(parallel_intersection)
+                if abs(edge[0][1] - min_y) < tolerance and abs(edge[1][1] - min_y) < tolerance:
+                    parallel_intersection_points.extend([((edge[0][0]), (edge[0][1])),
+                                                        ((edge[1][0]), (edge[1][1]))])
+            print("Parallel Intersection Points:", parallel_intersection_points)
+            #min_par_z = min(point[1] for point in parallel_intersection_points)
+            #max_par_z = max(point[1] for point in parallel_intersection_points)
+            #z_fill = min_par_z
+            #while z_fill <= max_par_z:
+               # intersection_points.append((min_x, y_fill, z_fill))
+                #z_fill += step_size    
+            y_fill += step_size

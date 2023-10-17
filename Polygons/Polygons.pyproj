@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>fa5524b4-0c1d-453a-bfac-df544ce3e3e0</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>absolute_garbage.py</StartupFile>
+    <StartupFile>2pp_polytope.py</StartupFile>
     <SearchPath>kopec.py</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
@@ -24,7 +24,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="2pp_polygon.py" />
+    <Compile Include="2pp_polytope.py" />
     <Compile Include="3D_2pp_input.yaml" />
     <Compile Include="absolute_garbage.py" />
     <Compile Include="NOTWORKING_3D_polygon.py" />
@@ -38,7 +38,7 @@
     <Compile Include="multiple_polygons.py" />
     <Compile Include="optimization_test_multiple_polygons.py" />
     <Compile Include="test_1pp_polygon_3D.py" />
-    <Compile Include="test_2pp_polygon_3D.py" />
+    <Compile Include="CURRENT_2pp_polygon_3D.py" />
     <Compile Include="vertice_extractor.py" />
   </ItemGroup>
   <ItemGroup>

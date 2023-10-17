@@ -1,8 +1,10 @@
 speed_on : 2.0 #laser table speed when laser is turned on [mm/s]
 laser_output: 2 #Energy of the laser
-x_repetition: 1 #number of objects in the array in the x direction
-y_repetition: 1 #number of objects in the array in the y direction
-spacing: 0.3 #space between objects in the array [mm]
-output_file : C:\Users\mitura\Documents\Python_scripts\Polygon\Tower_2_5um_z.fab #output file for uFab to read
+x_repetition: 2 #number of objects in the array in the x direction
+y_repetition: 2 #number of objects in the array in the y direction
+spacing: 0.01 #space between objects in the array [mm]
+kriziky: 0 #0 to not draw crosses along the height, 1 to draw crosses
+scale_ratio: 1 #coordinates are given in mm, ratio of scaling down the drawn object
+output_file : C:\Users\mitura\Documents\Python_scripts\Polygon\CubeMash.fab #output file for uFab to read
 
   
