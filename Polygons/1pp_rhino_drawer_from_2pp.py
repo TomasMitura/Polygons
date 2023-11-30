@@ -21,9 +21,9 @@ def visualize_3d_points(x_coords, y_coords, z_coords):
     plt.show()
 
 def draw_contours(fab_file, x_repetition, y_repetition, build_polygon, z_height, z_step, x_coords, y_coords, z_coords, speed_on, laser_output, max_x, max_y, max_z, min_x, min_y, min_z, spacing, crosses, cross_spacing, overhang_x, overhang_y):
-    fab_file.write("p\t3\n")
-    x_move = max_x + spacing
-    y_move = max_y + spacing
+    fab_file.write("p\t2\n")
+    x_move = 0
+    y_move = 0
     n = 1
     m = 1
     speed_return = 80.0
@@ -66,8 +66,13 @@ def draw_contours(fab_file, x_repetition, y_repetition, build_polygon, z_height,
     #If we already input a finished object and we don't want to repeat it, this part of the code will run
     else:
         print('we draw the given object')
-        for i in range(len(x_coords)):
-                    x, y, z = x_coords[i], y_coords[i], z_coords[i]
+        coordinates = [(x, y, z, i) for i, (x, y, z) in enumerate(zip(x_coords, y_coords, z_coords))]
+
+        # Sort the coordinates based on y and x values
+        sorted_coordinates = sorted(coordinates, key=lambda coord: (coord[1]))
+
+        # Iterate through the sorted coordinates and write them to the fab file
+        for x, y, z, i in sorted_coordinates:
                     if i == 0:
                         speed_on = speed_save_point
                         laser_output = 0.000000
@@ -130,7 +135,7 @@ if __name__ == "__main__":
             polygon_data = yaml.load(file, Loader=yaml.FullLoader)
             polygon = polygon_data.get('points', [])
          
-        scaled_polygon_coords = [{'x': point['x'] * scale_ratio, 'y': point['y']* scale_ratio, 'z': point['z'] * scale_ratio} for point in polygon]
+        scaled_polygon_coords = [{'x': (point['x'] * scale_ratio), 'y': point['y'] * 0.1 * scale_ratio, 'z': point['z'] * scale_ratio} for point in polygon]
         x_coords = [point['x'] for point in scaled_polygon_coords]
         y_coords = [point['y'] for point in scaled_polygon_coords]
         z_coords = [point['z'] for point in scaled_polygon_coords]

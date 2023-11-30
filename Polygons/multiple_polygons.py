@@ -94,22 +94,6 @@ if __name__ == "__main__":
         largest_x = float('-inf')
         largest_y = float('-inf')
 
-        #Iterate through the input_dict to find the largest x and y values
-        for key in input_dict:
-            if key.startswith('polygon_'):
-                coordinates = input_dict[key]
-                for coord in coordinates:
-                    x, y = float(coord['x']), float(coord['y'])
-                    largest_x = max(largest_x, x)
-                    largest_y = max(largest_y, y)
-                    
-        #Print the largest x and y
-        #Print the largest x and y after normalization
-
-        #Initialize smallest x and y with positive infinity
-        smallest_x = float('+inf')
-        smallest_y = float('+inf')
-
         #Iterate through the input_dict to find the smallest x and y values
         for key in input_dict:
             if key.startswith('polygon_'):

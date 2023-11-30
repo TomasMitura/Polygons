@@ -9,10 +9,10 @@ def draw_pyramid(base_z, z_increment, xy_increment, speed_on, file_path):
         x1 = 0.4
         y1 = 0.4
         while (abs(x1)-abs(x0)) > 0.01:
-            fab_file.write(f"c\t0\t{x0:.6f}\t{y0:.6f}\t{z:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{laser_output:.6f}\t0\n")
-            fab_file.write(f"c\t0\t{x0:.6f}\t{y1:.6f}\t{z:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{laser_output:.6f}\t0\n")
-            fab_file.write(f"c\t0\t{x1:.6f}\t{y1:.6f}\t{z:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{laser_output:.6f}\t0\n")
-            fab_file.write(f"c\t0\t{x1:.6f}\t{y0:.6f}\t{z:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{speed_on:.6f}\t{laser_output:.6f}\t0\n")
+            fab_file.write(f"c\t0\t{x0:.6f}\t{y0:.6f}\t{z:.6f}\t{speed_on:.6f}\t{laser_output:.6f}\t0\n")
+            fab_file.write(f"c\t0\t{x0:.6f}\t{y1:.6f}\t{z:.6f}\t{speed_on:.6f}\t{laser_output:.6f}\t0\n")
+            fab_file.write(f"c\t0\t{x1:.6f}\t{y1:.6f}\t{z:.6f}\t{speed_on:.6f}\t{laser_output:.6f}\t0\n")
+            fab_file.write(f"c\t0\t{x1:.6f}\t{y0:.6f}\t{z:.6f}\t{speed_on:.6f}\t{laser_output:.6f}\t0\n")
             x1 += -(xy_increment)
             y1 += -(xy_increment)
             x0 += xy_increment
@@ -26,8 +26,8 @@ def draw_pyramid(base_z, z_increment, xy_increment, speed_on, file_path):
 if __name__ == "__main__":
     z_increment = 0.005
     xy_increment = 0.005
-    base_z = 1.08
-    speed_on = 6
-    file_path = r"C:\Users\mitura\Documents\Python_scripts\2pp\pyramid_6mms.fab"
+    base_z = 0.0
+    speed_on = 1
+    file_path = r"C:\Users\mitura\Documents\Python_scripts\2pp\pyramid_110623.fab"
     
     draw_pyramid(base_z, z_increment, xy_increment, speed_on, file_path)

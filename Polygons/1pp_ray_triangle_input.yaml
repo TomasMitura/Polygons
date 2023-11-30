@@ -1,0 +1,14 @@
+output_file : C:\Users\mitura\Documents\Python_scripts\Polygon\Hexagon.fab
+depth_file : C:\Users\mitura\Documents\Python_scripts\Depth\VD_Interpolated031023.xlsx
+obj_file_path : C:\Users\mitura\Documents\Python_scripts\Objects\hexagon.obj
+
+speed_off : 200
+base_speed : 2
+slow_speed : 0.5
+
+step_size_x : 0.005
+step_size_y : 0.005
+
+tolerance : 1e-6
+
+scale_factor : 0.01

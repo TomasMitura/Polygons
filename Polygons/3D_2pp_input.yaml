@@ -1,10 +1,32 @@
-speed_on : 2.0 #laser table speed when laser is turned on [mm/s]
-laser_output: 2 #Energy of the laser
-x_repetition: 2 #number of objects in the array in the x direction
-y_repetition: 2 #number of objects in the array in the y direction
-spacing: 0.01 #space between objects in the array [mm]
-kriziky: 0 #0 to not draw crosses along the height, 1 to draw crosses
+#Input for script called 'CURRENT_2pp_polygon_3D.py'. It works based on an object created in Rhino 7. Either draw 2D base by hand or generate 3D slices in Grasshopper.
+#After drawing the object, you need to go to Curve -> Curve from Objects -> Extract Points. Then, in commands, type EditPythonScript and pick a script called
+#3D_vertice_layer - this will output all the points of this file, typically sorted by the z-coordinate. You have to specify the file name in the script under file_path
+#then call upon the file in this input folder with a variable called object_input_file 
+
+speed_on : 0.05 #laser table speed when laser is turned on [mm/s]
+laser_output: 2 #Energy of the laser, irrelevant for 2pp
+
+#array repetition. Repeats the object in the x or y direction
+x_repetition: 0 #number of objects in the array in the x direction
+y_repetition: 0 #number of objects in the array in the y direction
+spacing: 0.00 #space between objects in the array [mm]
+
+#crosses serve as an indicator of height. They are centered based on the minimum and maximum x and y coordinates
+#they go from the middle and overhang a specified distance over the maximum and minimum coordinates - best works on objects with rectangular base
+#in the exact middle of the height of the object a larger cross with twice the overhang is drawn as a reference 
+crosses: 0 #0 to not draw crosses along the height, 1 to draw crosses
+cross_spacing: 0.05 #distance in the z-direction between each cross [mm]
+overhang_x: 0.025 #overhanging length of the cross in the x-direction [mm]
+overhang_y: 0.025 #overhanging length of the cross in the y-direction [mm]
+
 scale_ratio: 1 #coordinates are given in mm, ratio of scaling down the drawn object
-output_file : C:\Users\mitura\Documents\Python_scripts\Polygon\CubeMash.fab #output file for uFab to read
+
+#if you have drawn a 2D polygon and want to build it up in slices the z-direction. If you are inputting a finished object, do not use
+build_polygon: 0 #do not use if you are using array repetition. To activate, value 1. To not activate, value 0
+z_height: 1.0 #if build_polygon: 1, input the desired height of the object. It should be divisable by the z_step
+z_step: 0.04 #if build_polygon: 1, height between individual slices
+
+output_file: C:\Users\mitura\Documents\Python_scripts\Polygon\TestPoints.fab #output file for uFab to read
+object_input_file: C:\Users\mitura\Documents\Python_scripts\Objects\TestPoints.yaml #file where you stored your object
 
   

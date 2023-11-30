@@ -1,7 +1,7 @@
 import yaml
 
 def draw_contours(fab_file, x_repetition, y_repetition, spacing, x_coords, y_coords, z, speed_on, laser_output):
-    speed_return = 80.0
+    speed_return = 20.0
     n = 1
     m = 1
     

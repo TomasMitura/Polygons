@@ -148,7 +148,6 @@ plt.figure()
 
 # Draw the polygon outline
 draw_polygon(edges)
-#draw_polygon(edges_2)
 
 # Show the plot
 plt.axis('equal')  # Set aspect ratio to equal for a consistent scale
